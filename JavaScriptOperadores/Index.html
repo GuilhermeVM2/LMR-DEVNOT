@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+    <form action="" id="MyCalc">
+        <label for="pvalor1" title="Informe o Valor 1">
+            Entre com o 1° valor ....:
+        </label>
+        <input type="text" id="pvalor1" />
+        <br>
+        <label for="pvalor2" title="Informe o Valor 2">
+            Entre com o 2° valor ....:
+        </label>
+        <input type="text" id="pvalor2" />
+        <br><br>
+        <input type="button" value="Somar" onclick="Somar()" />
+        <input type="button" value="Subtrair" onclick="Sub()" />
+        <input type="button" value="Multiplicar" onclick="Mult()" />
+        <input type="button" value="Divisão" onclick="Div()" />
+
+    </form>
+
 </body>
-    <script src="script1.js"></script>
+<script src="script.js"></script>
+
 </html>
