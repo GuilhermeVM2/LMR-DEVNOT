@@ -15,3 +15,11 @@
 #fundoheader{
   background: rgb(0,212,255,1);
 }
+#lead {
+  width: 50px;
+}
+
+h1{
+  display: flex;
+  justify-content: center;
+}
