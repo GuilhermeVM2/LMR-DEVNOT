@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Edifício</title>
+    <style>
+        .quadrado {
+            width: 80px;
+            height: 40px;
+            background-color: black;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            transition: background-color 0.5s;
+        }
+
+        .quadrado.blue {
+            background-color: blue;
+        }
+
+        #idSelecionado {
+            color: white;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="building">
+        <div class="column">
+            <h1>1° Elevador----</h1>
+            <div class="quadrado" id="q1" onclick="mudarCor('q1', 6)"></div>
+            <div class="quadrado" id="q2" onclick="mudarCor('q2', 5)"></div>
+            <div class="quadrado" id="q3" onclick="mudarCor('q3', 4)"></div>
+            <div class="quadrado" id="q4" onclick="mudarCor('q4', 3)"></div>
+            <div class="quadrado" id="q5" onclick="mudarCor('q5', 2)"></div>
+            <div class="quadrado" id="q6" onclick="mudarCor('q6', 1)"></div>
+            <div class="quadrado" id="q7" onclick="mudarCor('q7', 0)"></div>
+            <div class="quadrado" id="q8" onclick="mudarCor('q8', -1)"></div>
+            <div class="quadrado" id="q9" onclick="mudarCor('q9', -2)"></div>
+        </div>
+        <div class="column">
+            <h1>----2° Elevador----</h1>
+            <div class="quadrado" id="q10" onclick="mudarCor('q10', 6)"></div>
+            <div class="quadrado" id="q11" onclick="mudarCor('q11', 5)"></div>
+            <div class="quadrado" id="q12" onclick="mudarCor('q12', 4)"></div>
+            <div class="quadrado" id="q13" onclick="mudarCor('q13', 3)"></div>
+            <div class="quadrado" id="q14" onclick="mudarCor('q14', 2)"></div>
+            <div class="quadrado" id="q15" onclick="mudarCor('q15', 1)"></div>
+            <div class="quadrado" id="q16" onclick="mudarCor('q16', 0)"></div>
+            <div class="quadrado" id="q17" onclick="mudarCor('q17', -1)"></div>
+            <div class="quadrado" id="q18" onclick="mudarCor('q18', -2)"></div>
+        </div>
+        <div class="column buttons">
+            <h1>botões</h1>
+            <button class="quadrado" onclick="moverElevador(6)">Andar 5</button>
+            <button class="quadrado" onclick="moverElevador(5)">Andar 4</button>
+            <button class="quadrado" onclick="moverElevador(4)">Andar 3</button>
+            <button class="quadrado" onclick="moverElevador(3)">Andar 2</button>
+            <button class="quadrado" onclick="moverElevador(2)">Andar 1</button>
+            <button class="quadrado" onclick="moverElevador(1)">Andar 0</button>
+            <button class="quadrado" onclick="moverElevador(0)">Andar -1</button>
+            <button class="quadrado" onclick="moverElevador(-1)">Andar -2</button>
+            <button class="quadrado" onclick="moverElevador(-2)">Andar -3</button>
+            <button class="quadrado" onclick="mudarCoresQ7Q16('q9', 'q18')">Ligar Elevador</button>
+        </div>
+        <div id="idSelecionado"></div>
+    </div>
+
+    <script>
+        var ultimoAndarIluminado = null;
+        var elevador1 = 0;
+        var elevador2 = 0;
+
+        function mudarCoresQ7Q16(idQuadrado1, idQuadrado2) {
+            mudarCor(idQuadrado1, 1);
+            mudarCor(idQuadrado2, 2);
+        }
+
+        function mudarCor(idQuadrado, elevador) {
+            // Remove a classe 'blue' apenas dos quadrados na coluna correspondente
+            document.querySelectorAll('.column:nth-child(' + elevador + ') .quadrado').forEach(function (quadrado) {
+                quadrado.classList.remove('blue');
+            });
+            // Adiciona a classe 'blue' apenas ao quadrado clicado
+            var quadrado = document.getElementById(idQuadrado);
+            quadrado.classList.add('blue');
+        }
+
+        function mostrarIDSelecionado(id) {
+            document.getElementById("idSelecionado").innerText = "ID selecionado: " + id;
+        }
+
+        function moverElevador(andarDesejado) {
+            var deslocamento1 = Math.abs(andarDesejado - elevador1);
+            var deslocamento2 = Math.abs(andarDesejado - elevador2);
+
+            if (deslocamento1 <= deslocamento2) {
+                var quadrados = [];
+                for (var i = Math.min(elevador1, andarDesejado); i <= Math.max(elevador1, andarDesejado); i++) {
+                    quadrados.push('q' + (7 - i));
+                }
+                var delay = 500; // meio segundo
+                acenderApagarUmPorVez(quadrados, delay, 1);
+                elevador1 = andarDesejado; // Atualiza a posição do elevador 1
+            } else {
+                var quadrados = [];
+                for (var i = Math.min(elevador2, andarDesejado); i <= Math.max(elevador2, andarDesejado); i++) {
+                    quadrados.push('q' + (16 - i));
+                }
+                var delay = 500; // meio segundo
+                acenderApagarUmPorVez(quadrados, delay, 2);
+                elevador2 = andarDesejado; // Atualiza a posição do elevador 2
+            }
+        }
+
+        function acenderApagarUmPorVez(quadrados, delay, elevador, index = 0) {
+            if (index < quadrados.length) {
+
+                var sentido = (elevador === 1 && elevador1 > quadrados[index].replace('q', '')) ||
+                              (elevador === 2 && elevador2 > quadrados[index].replace('q', '')) ? -1 : 1;
+
+                mudarCor(quadrados[index], elevador);
+                mostrarIDSelecionado('Andar ' + (quadrados.length - index) + ' - Mudando: ' + (index + 1));
+                setTimeout(function () {
+                    mudarCor(quadrados[index], elevador);
+                    acenderApagarUmPorVez(quadrados, delay, elevador, index + 1);
+                }, delay * sentido);
+            } else {
+                // Quando a animação termina, mantenha o último andar iluminado
+                ultimoAndarIluminado = quadrados[quadrados.length - 1];
+                mudarCor(ultimoAndarIluminado, elevador);
+            }
+        }
+    </script>
+</body>
+
+</html>

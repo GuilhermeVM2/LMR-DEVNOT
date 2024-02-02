@@ -1,0 +1,41 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.building {
+    display: flex;
+}
+
+.elevator-shaft {
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.call-btn {
+    margin-bottom: 10px;
+}
+
+.elevator {
+    width: 30px;
+    height: 30px;
+    background-color: #3498db;
+    margin-bottom: 5px;
+}
+
+.floors {
+    display: flex;
+    flex-direction: column;
+}
+
+.floor {
+    width: 30px;
+    height: 30px;
+    background-color: #ecf0f1;
+    margin-bottom: 5px;
+}
